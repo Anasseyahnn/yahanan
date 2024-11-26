@@ -1,0 +1,32 @@
+{
+    "id": "462CB6A0",
+    "path": "~/GitHub/My_bolg/portofolio.qmd",
+    "project_path": "portofolio.qmd",
+    "type": "quarto_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1732655216865.0,
+    "source_on_save": false,
+    "relative_order": 5,
+    "properties": {
+        "rmdVisualMode": "false",
+        "rmdVisualWrapConfigured": "true",
+        "source_window_id": "",
+        "Source": "Source",
+        "docOutlineVisible": "1",
+        "rmdVisualCollapsedChunks": "",
+        "cursorPosition": "12,0",
+        "scrollLine": "0",
+        "rmdVisualModeLocation": "2:0",
+        "docOutlineSize": "40"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1732655821,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1732655821485,
+    "read_only": false,
+    "read_only_alternatives": []
+}

@@ -1,0 +1,32 @@
+{
+    "id": "89E3A0D6",
+    "path": "~/GitHub/My_bolg/index.qmd",
+    "project_path": "index.qmd",
+    "type": "quarto_markdown",
+    "hash": "1065852003",
+    "contents": "",
+    "dirty": false,
+    "created": 1732655303266.0,
+    "source_on_save": false,
+    "relative_order": 3,
+    "properties": {
+        "rmdVisualMode": "false",
+        "rmdVisualWrapConfigured": "true",
+        "source_window_id": "",
+        "Source": "Source",
+        "docOutlineVisible": "0",
+        "rmdVisualCollapsedChunks": "",
+        "cursorPosition": "5,8",
+        "scrollLine": "0",
+        "rmdVisualModeLocation": "2:0",
+        "docOutlineSize": "582"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1732657717,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1732657717924,
+    "read_only": false,
+    "read_only_alternatives": []
+}

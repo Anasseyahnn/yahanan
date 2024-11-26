@@ -1,0 +1,13 @@
+---
+title: "Diabete Analysis"
+author: "Anassé Yahanan"
+date: "2024-11-26"
+categories: [code, analysis, r]
+image: "image.jpg"
+---
+
+This is a post with executable code.
+
+```{r}
+1 + 1
+```
