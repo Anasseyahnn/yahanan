@@ -1,13 +1,250 @@
 ---
-title: "Diabete Analysis"
+title: "Analyse des live"
 author: "Anassé Yahanan"
 date: "2024-11-26"
-categories: [code, analysis, r]
+categories: [code, analysis, cluster, Kmeans, r]
 image: "image.jpg"
 ---
 
-This is a post with executable code.
+La base de données 'Live' contient des informations collectées auprès de vendeurs sur Facebook en Thaïlande. Elle comprend différents types de statuts (photo, vidéo, etc.) ainsi que diverses métriques telles que les 'likes', 'shares', et 'comments'.
+
+# Objectif de l'étude
+
+L'objectif de cette analyse est de découvrir des modèles et des tendances dans les données qui peuvent nous aider à comprendre comment les utilisateurs de Facebook en Thaïlande interagissent avec les publications des vendeurs en ligne.
+
+# Resultats attendus
+
+-   Optimiser la stratégie de contenu des vendeurs
+
+-   Améliorer l'engagement des utilisateurs
+
+-    Augmenter les ventes.
+
+# Méthodologie 
+
+Étape 1 : Analyse et traitement des données
+
+Étape 2 : Analyse de la relation qui existe entre les variables
+
+Étape 3 : Analyse de la relation multivariée entre les variables
+
+Étape 4 : Choix du nombre de groupes optimal
+
+Étape 5 : Interprétation des résultats
+
+Etape 1: Analyse et traitement des données
+
+## Description des données 
+
+3 points clés à vérifier lors de la description des données :
+
+-   Point 1 : Selection des variables pertinentes
+
+-   Point 2 : Analyse des valeurs manquantes
+
+-   Point 3 : Analyse de la distribustion des variables et Description des données
 
 ```{r}
-1 + 1
+#| label: Chargement des librairies
+#| message: false
+#| echo: false
+library(tidyverse)
+library(DataExplorer)
+library(VIM)
+library(psych)
+library(ggdist)
+```
+
+```{r}
+#| label: Importation des données 
+#| message: false
+#| echo: false
+Live <- readr::read_csv("~/GitHub/yahanan/Live.csv")
+```
+
+### Présentation de la base de données 
+
+```{r}
+head(Live, n = 15) %>% gt::gt()
+```
+
+### Nature des variables présentes 
+
+```{r}
+#| message: false
+glimpse(Live)
+```
+
+La base de données contient les inforamtions suivantes:
+
+-   status_id : L'ID unique de chaque publication.
+
+-   status_type : Le type de publication (par exemple, photo, statut, lien, vidéo).
+
+-   status_published : La date et l'heure de la publication.
+
+-   num_reactions : Le nombre total de réactions à la publication (par exemple, likes, love, wow, haha, sad, angry).
+
+-   num_comments : Le nombre total de commentaires sur la publication.
+
+-   num_shares : Le nombre total de partages de la publication.
+
+-   num_likes : Le nombre total de "J'aime" pour la publication.
+
+-   num_loves : Le nombre total de "Love" réactions pour la publication.
+
+-   num_wows : Le nombre total de "Wow" réactions pour la publication.
+
+-   num_hahas : Le nombre total de "Haha" réactions pour la publication.
+
+-   num_sads : Le nombre total de "Sad" réactions pour la publication.
+
+-   num_angrys : Le nombre total de "Angry" réactions pour la publication.
+
+### Selection des colonnes pertinentes 
+
+```{r}
+#| echo: false
+publication <-Live %>% 
+  select(-c("Column1", "Column2", "Column3","Column4", "status_published"))
+```
+
+```{r}
+#| echo: false
+publication 
+```
+
+### Analyse des valeurs manquantes 
+
+```{r}
+#| echo: false
+prop_valeur_manquante = function(data){
+  # somme des valeurs manquantes 
+  nb_val_manquante  = sapply(data, function(x) sum(is.na(x)))
+  # proportion de valeur manquante
+  prop_manq = nb_val_manquante/nrow(data)
+  
+  # resultat 
+  resultat = data.frame(nombre =nb_val_manquante,proportion = prop_manq)
+  return(resultat)
+}
+```
+
+```{r}
+#| echo: false
+resultat <- prop_valeur_manquante(publication)
+resultat
+```
+
+#### Analyse graphique des valeurs manquantes 
+
+```{r}
+plot_missing(publication)
+```
+
+### Analyse des distribustions et description des données
+
+### 1. Analyse des distribustions
+
+#### 1.1 Analyse de la distribustion de la variable status_type 
+
+```{r}
+publication %>% 
+  group_by(status_type) %>% 
+  summarise(Total = n()) %>% 
+  ungroup() %>% 
+  as_tibble() %>% 
+  mutate(Proportion = Total/sum(Total)*100) %>% 
+  knitr::kable()
+```
+
+```{r}
+#| echo: false
+type_statut_df <- publication %>% 
+  group_by(status_type) %>% 
+  summarise(Total = n()) %>% 
+  ungroup() %>% 
+  as_tibble() %>% 
+  mutate(Proportion = Total/sum(Total)*100) 
+```
+
+```{r}
+ggplot(type_statut_df, aes(x = status_type, y = Total, fill = status_type)) +
+  geom_bar(stat = "identity") +
+  geom_text(aes(label = paste(round(Proportion), "%")), vjust = -0.5) +
+  labs(title = "Distribustion par Type de Statut", x = "Type de Statut", y = "Nombre") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Pastel1")
+```
+
+#### 1.2 Analyse de la distribustion des variables continues 
+
+```{r}
+liste_variable_quanti <-colnames(publication)[-c(1,2)]
+
+for (var in liste_variable_quanti) {
+  # Vérifier si la variable est continue
+  if (is.numeric(publication[[var]])) {
+    print(ggplot(publication, aes(x = factor(1), y = .data[[var]])) +
+            geom_boxplot(fill = "skyblue", color = "darkblue") +
+            theme_minimal() +
+            labs(title = paste("Boxplot de", var), x = "", y = var))
+  } else {
+    message(paste("La variable", var, "n'est pas quantitative et sera ignorée pour les boxplots."))
+  }
+}
+
+```
+
+####  
+
+### 2. Description des données
+
+```{r}
+publication %>% 
+  select(-c(1,2)) %>% 
+  describe() %>% knitr::kable(caption = "Table statistique des données")
+```
+
+## Analyse de la relation entre les variables
+
+```{r}
+colors <- c('#E69f00', "#009e73", '#0072b2', 'tomato')
+names(colors) <- unique(publication$status_type)
+title_test <- glue::glue(
+  'Type de statut pour les publications'
+)
+```
+
+##  
+
+```{r}
+#| warning: false
+#| message: false
+publication %>% 
+  ggplot(aes(x= num_reactions, fill = status_type, y = status_type))+
+  geom_boxplot(width = 0.1)+
+  geom_dots(
+    side = 'bottom',
+    height = 0.55,
+    position = position_nudge(y = -0.075)
+  )+
+  stat_slab(
+    position = position_nudge(y = -0.075),
+    height = 0.75
+  )+
+  scale_fill_manual(values = colors)+
+  labs(
+    x = element_blank(),
+    y = element_blank(),
+    title = title_test
+  )+
+  theme_minimal(
+    base_size = 20,
+    base_family = 'Source Sans Pro'
+  )+
+  theme(
+    plot.title = ggtext::element_markdown(),
+    panel.grid.minor = element_blank(),
+  )
 ```

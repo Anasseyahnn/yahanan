@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Harlow Malloc">
+<meta name="author" content="Anassé Yahanan">
 <meta name="dcterms.date" content="2024-11-26">
 
-<title>Post With Code – Anassé Yahanan</title>
+<title>Analyse des live – Anassé Yahanan</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -159,11 +159,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Post With Code</h1>
+      <h1 class="title">Analyse des live</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">news</div>
                 <div class="quarto-category">code</div>
                 <div class="quarto-category">analysis</div>
+                <div class="quarto-category">cluster</div>
+                <div class="quarto-category">Kmeans</div>
+                <div class="quarto-category">r</div>
               </div>
                   </div>
   </div>
@@ -174,7 +176,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Harlow Malloc </p>
+               <p>Anassé Yahanan </p>
             </div>
     </div>
       
@@ -200,15 +202,1280 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This is a post with executable code.</p>
+<p>La base de données ‘Live’ contient des informations collectées auprès de vendeurs sur Facebook en Thaïlande. Elle comprend différents types de statuts (photo, vidéo, etc.) ainsi que diverses métriques telles que les ‘likes’, ‘shares’, et ‘comments’.</p>
+<section id="objectif-de-létude" class="level1">
+<h1>Objectif de l’étude</h1>
+<p>L’objectif de cette analyse est de découvrir des modèles et des tendances dans les données qui peuvent nous aider à comprendre comment les utilisateurs de Facebook en Thaïlande interagissent avec les publications des vendeurs en ligne.</p>
+</section>
+<section id="resultats-attendus" class="level1">
+<h1>Resultats attendus</h1>
+<ul>
+<li><p>Optimiser la stratégie de contenu des vendeurs</p></li>
+<li><p>Améliorer l’engagement des utilisateurs</p></li>
+<li><p>Augmenter les ventes.</p></li>
+</ul>
+</section>
+<section id="méthodologie" class="level1">
+<h1>Méthodologie</h1>
+<p>Étape 1 : Analyse et traitement des données</p>
+<p>Étape 2 : Analyse de la relation qui existe entre les variables</p>
+<p>Étape 3 : Analyse de la relation multivariée entre les variables</p>
+<p>Étape 4 : Choix du nombre de groupes optimal</p>
+<p>Étape 5 : Interprétation des résultats</p>
+<p>Etape 1: Analyse et traitement des données</p>
+<section id="description-des-données" class="level2">
+<h2 class="anchored" data-anchor-id="description-des-données">Description des données</h2>
+<p>3 points clés à vérifier lors de la description des données :</p>
+<ul>
+<li><p>Point 1 : Selection des variables pertinentes</p></li>
+<li><p>Point 2 : Analyse des valeurs manquantes</p></li>
+<li><p>Point 3 : Analyse de la distribustion des variables et Description des données</p></li>
+</ul>
+<section id="présentation-de-la-base-de-données" class="level3">
+<h3 class="anchored" data-anchor-id="présentation-de-la-base-de-données">Présentation de la base de données</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(Live, <span class="at">n =</span> <span class="dv">15</span>) <span class="sc">%&gt;%</span> gt<span class="sc">::</span><span class="fu">gt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="avdtopigls" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#avdtopigls table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#avdtopigls thead, #avdtopigls tbody, #avdtopigls tfoot, #avdtopigls tr, #avdtopigls td, #avdtopigls th {
+  border-style: none;
+}
+
+#avdtopigls p {
+  margin: 0;
+  padding: 0;
+}
+
+#avdtopigls .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#avdtopigls .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#avdtopigls .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#avdtopigls .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#avdtopigls .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#avdtopigls .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#avdtopigls .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#avdtopigls .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#avdtopigls .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#avdtopigls .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#avdtopigls .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#avdtopigls .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#avdtopigls .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#avdtopigls .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#avdtopigls .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#avdtopigls .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#avdtopigls .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#avdtopigls .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#avdtopigls .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#avdtopigls .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#avdtopigls .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#avdtopigls .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#avdtopigls .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#avdtopigls .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#avdtopigls .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#avdtopigls .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#avdtopigls .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#avdtopigls .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#avdtopigls .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#avdtopigls .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#avdtopigls .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#avdtopigls .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#avdtopigls .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#avdtopigls .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#avdtopigls .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#avdtopigls .gt_left {
+  text-align: left;
+}
+
+#avdtopigls .gt_center {
+  text-align: center;
+}
+
+#avdtopigls .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#avdtopigls .gt_font_normal {
+  font-weight: normal;
+}
+
+#avdtopigls .gt_font_bold {
+  font-weight: bold;
+}
+
+#avdtopigls .gt_font_italic {
+  font-style: italic;
+}
+
+#avdtopigls .gt_super {
+  font-size: 65%;
+}
+
+#avdtopigls .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#avdtopigls .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#avdtopigls .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#avdtopigls .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#avdtopigls .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#avdtopigls .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#avdtopigls .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#avdtopigls .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#avdtopigls div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+<tr class="header gt_col_headings">
+<th id="status_id" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">status_id</th>
+<th id="status_type" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col">status_type</th>
+<th id="status_published" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">status_published</th>
+<th id="num_reactions" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">num_reactions</th>
+<th id="num_comments" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">num_comments</th>
+<th id="num_shares" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">num_shares</th>
+<th id="num_likes" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">num_likes</th>
+<th id="num_loves" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">num_loves</th>
+<th id="num_wows" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">num_wows</th>
+<th id="num_hahas" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">num_hahas</th>
+<th id="num_sads" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">num_sads</th>
+<th id="num_angrys" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">num_angrys</th>
+<th id="Column1" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Column1</th>
+<th id="Column2" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Column2</th>
+<th id="Column3" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Column3</th>
+<th id="Column4" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col">Column4</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+<tr class="odd">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1649696485147474</td>
+<td class="gt_row gt_left" headers="status_type">video</td>
+<td class="gt_row gt_right" headers="status_published">4/22/2018 6:00</td>
+<td class="gt_row gt_right" headers="num_reactions">529</td>
+<td class="gt_row gt_right" headers="num_comments">512</td>
+<td class="gt_row gt_right" headers="num_shares">262</td>
+<td class="gt_row gt_right" headers="num_likes">432</td>
+<td class="gt_row gt_right" headers="num_loves">92</td>
+<td class="gt_row gt_right" headers="num_wows">3</td>
+<td class="gt_row gt_right" headers="num_hahas">1</td>
+<td class="gt_row gt_right" headers="num_sads">1</td>
+<td class="gt_row gt_right" headers="num_angrys">0</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1649426988507757</td>
+<td class="gt_row gt_left" headers="status_type">photo</td>
+<td class="gt_row gt_right" headers="status_published">4/21/2018 22:45</td>
+<td class="gt_row gt_right" headers="num_reactions">150</td>
+<td class="gt_row gt_right" headers="num_comments">0</td>
+<td class="gt_row gt_right" headers="num_shares">0</td>
+<td class="gt_row gt_right" headers="num_likes">150</td>
+<td class="gt_row gt_right" headers="num_loves">0</td>
+<td class="gt_row gt_right" headers="num_wows">0</td>
+<td class="gt_row gt_right" headers="num_hahas">0</td>
+<td class="gt_row gt_right" headers="num_sads">0</td>
+<td class="gt_row gt_right" headers="num_angrys">0</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1648730588577397</td>
+<td class="gt_row gt_left" headers="status_type">video</td>
+<td class="gt_row gt_right" headers="status_published">4/21/2018 6:17</td>
+<td class="gt_row gt_right" headers="num_reactions">227</td>
+<td class="gt_row gt_right" headers="num_comments">236</td>
+<td class="gt_row gt_right" headers="num_shares">57</td>
+<td class="gt_row gt_right" headers="num_likes">204</td>
+<td class="gt_row gt_right" headers="num_loves">21</td>
+<td class="gt_row gt_right" headers="num_wows">1</td>
+<td class="gt_row gt_right" headers="num_hahas">1</td>
+<td class="gt_row gt_right" headers="num_sads">0</td>
+<td class="gt_row gt_right" headers="num_angrys">0</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1648576705259452</td>
+<td class="gt_row gt_left" headers="status_type">photo</td>
+<td class="gt_row gt_right" headers="status_published">4/21/2018 2:29</td>
+<td class="gt_row gt_right" headers="num_reactions">111</td>
+<td class="gt_row gt_right" headers="num_comments">0</td>
+<td class="gt_row gt_right" headers="num_shares">0</td>
+<td class="gt_row gt_right" headers="num_likes">111</td>
+<td class="gt_row gt_right" headers="num_loves">0</td>
+<td class="gt_row gt_right" headers="num_wows">0</td>
+<td class="gt_row gt_right" headers="num_hahas">0</td>
+<td class="gt_row gt_right" headers="num_sads">0</td>
+<td class="gt_row gt_right" headers="num_angrys">0</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1645700502213739</td>
+<td class="gt_row gt_left" headers="status_type">photo</td>
+<td class="gt_row gt_right" headers="status_published">4/18/2018 3:22</td>
+<td class="gt_row gt_right" headers="num_reactions">213</td>
+<td class="gt_row gt_right" headers="num_comments">0</td>
+<td class="gt_row gt_right" headers="num_shares">0</td>
+<td class="gt_row gt_right" headers="num_likes">204</td>
+<td class="gt_row gt_right" headers="num_loves">9</td>
+<td class="gt_row gt_right" headers="num_wows">0</td>
+<td class="gt_row gt_right" headers="num_hahas">0</td>
+<td class="gt_row gt_right" headers="num_sads">0</td>
+<td class="gt_row gt_right" headers="num_angrys">0</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1645650162218773</td>
+<td class="gt_row gt_left" headers="status_type">photo</td>
+<td class="gt_row gt_right" headers="status_published">4/18/2018 2:14</td>
+<td class="gt_row gt_right" headers="num_reactions">217</td>
+<td class="gt_row gt_right" headers="num_comments">6</td>
+<td class="gt_row gt_right" headers="num_shares">0</td>
+<td class="gt_row gt_right" headers="num_likes">211</td>
+<td class="gt_row gt_right" headers="num_loves">5</td>
+<td class="gt_row gt_right" headers="num_wows">1</td>
+<td class="gt_row gt_right" headers="num_hahas">0</td>
+<td class="gt_row gt_right" headers="num_sads">0</td>
+<td class="gt_row gt_right" headers="num_angrys">0</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1645564175560705</td>
+<td class="gt_row gt_left" headers="status_type">video</td>
+<td class="gt_row gt_right" headers="status_published">4/18/2018 0:24</td>
+<td class="gt_row gt_right" headers="num_reactions">503</td>
+<td class="gt_row gt_right" headers="num_comments">614</td>
+<td class="gt_row gt_right" headers="num_shares">72</td>
+<td class="gt_row gt_right" headers="num_likes">418</td>
+<td class="gt_row gt_right" headers="num_loves">70</td>
+<td class="gt_row gt_right" headers="num_wows">10</td>
+<td class="gt_row gt_right" headers="num_hahas">2</td>
+<td class="gt_row gt_right" headers="num_sads">0</td>
+<td class="gt_row gt_right" headers="num_angrys">3</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1644824665634656</td>
+<td class="gt_row gt_left" headers="status_type">video</td>
+<td class="gt_row gt_right" headers="status_published">4/17/2018 7:42</td>
+<td class="gt_row gt_right" headers="num_reactions">295</td>
+<td class="gt_row gt_right" headers="num_comments">453</td>
+<td class="gt_row gt_right" headers="num_shares">53</td>
+<td class="gt_row gt_right" headers="num_likes">260</td>
+<td class="gt_row gt_right" headers="num_loves">32</td>
+<td class="gt_row gt_right" headers="num_wows">1</td>
+<td class="gt_row gt_right" headers="num_hahas">1</td>
+<td class="gt_row gt_right" headers="num_sads">0</td>
+<td class="gt_row gt_right" headers="num_angrys">1</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1644655795651543</td>
+<td class="gt_row gt_left" headers="status_type">photo</td>
+<td class="gt_row gt_right" headers="status_published">4/17/2018 3:33</td>
+<td class="gt_row gt_right" headers="num_reactions">203</td>
+<td class="gt_row gt_right" headers="num_comments">1</td>
+<td class="gt_row gt_right" headers="num_shares">0</td>
+<td class="gt_row gt_right" headers="num_likes">198</td>
+<td class="gt_row gt_right" headers="num_loves">5</td>
+<td class="gt_row gt_right" headers="num_wows">0</td>
+<td class="gt_row gt_right" headers="num_hahas">0</td>
+<td class="gt_row gt_right" headers="num_sads">0</td>
+<td class="gt_row gt_right" headers="num_angrys">0</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1638788379571618</td>
+<td class="gt_row gt_left" headers="status_type">photo</td>
+<td class="gt_row gt_right" headers="status_published">4/11/2018 4:53</td>
+<td class="gt_row gt_right" headers="num_reactions">170</td>
+<td class="gt_row gt_right" headers="num_comments">9</td>
+<td class="gt_row gt_right" headers="num_shares">1</td>
+<td class="gt_row gt_right" headers="num_likes">167</td>
+<td class="gt_row gt_right" headers="num_loves">3</td>
+<td class="gt_row gt_right" headers="num_wows">0</td>
+<td class="gt_row gt_right" headers="num_hahas">0</td>
+<td class="gt_row gt_right" headers="num_sads">0</td>
+<td class="gt_row gt_right" headers="num_angrys">0</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1637655039684952</td>
+<td class="gt_row gt_left" headers="status_type">photo</td>
+<td class="gt_row gt_right" headers="status_published">4/10/2018 1:01</td>
+<td class="gt_row gt_right" headers="num_reactions">210</td>
+<td class="gt_row gt_right" headers="num_comments">2</td>
+<td class="gt_row gt_right" headers="num_shares">3</td>
+<td class="gt_row gt_right" headers="num_likes">202</td>
+<td class="gt_row gt_right" headers="num_loves">7</td>
+<td class="gt_row gt_right" headers="num_wows">1</td>
+<td class="gt_row gt_right" headers="num_hahas">0</td>
+<td class="gt_row gt_right" headers="num_sads">0</td>
+<td class="gt_row gt_right" headers="num_angrys">0</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1636730006444122</td>
+<td class="gt_row gt_left" headers="status_type">photo</td>
+<td class="gt_row gt_right" headers="status_published">4/9/2018 2:06</td>
+<td class="gt_row gt_right" headers="num_reactions">222</td>
+<td class="gt_row gt_right" headers="num_comments">4</td>
+<td class="gt_row gt_right" headers="num_shares">0</td>
+<td class="gt_row gt_right" headers="num_likes">213</td>
+<td class="gt_row gt_right" headers="num_loves">5</td>
+<td class="gt_row gt_right" headers="num_wows">4</td>
+<td class="gt_row gt_right" headers="num_hahas">0</td>
+<td class="gt_row gt_right" headers="num_sads">0</td>
+<td class="gt_row gt_right" headers="num_angrys">0</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1635846033199186</td>
+<td class="gt_row gt_left" headers="status_type">photo</td>
+<td class="gt_row gt_right" headers="status_published">4/8/2018 5:10</td>
+<td class="gt_row gt_right" headers="num_reactions">313</td>
+<td class="gt_row gt_right" headers="num_comments">4</td>
+<td class="gt_row gt_right" headers="num_shares">2</td>
+<td class="gt_row gt_right" headers="num_likes">305</td>
+<td class="gt_row gt_right" headers="num_loves">6</td>
+<td class="gt_row gt_right" headers="num_wows">2</td>
+<td class="gt_row gt_right" headers="num_hahas">0</td>
+<td class="gt_row gt_right" headers="num_sads">0</td>
+<td class="gt_row gt_right" headers="num_angrys">0</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+<tr class="even">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1635730986544024</td>
+<td class="gt_row gt_left" headers="status_type">photo</td>
+<td class="gt_row gt_right" headers="status_published">4/8/2018 2:23</td>
+<td class="gt_row gt_right" headers="num_reactions">209</td>
+<td class="gt_row gt_right" headers="num_comments">4</td>
+<td class="gt_row gt_right" headers="num_shares">0</td>
+<td class="gt_row gt_right" headers="num_likes">200</td>
+<td class="gt_row gt_right" headers="num_loves">8</td>
+<td class="gt_row gt_right" headers="num_wows">1</td>
+<td class="gt_row gt_right" headers="num_hahas">0</td>
+<td class="gt_row gt_right" headers="num_sads">0</td>
+<td class="gt_row gt_right" headers="num_angrys">0</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+<tr class="odd">
+<td class="gt_row gt_left" headers="status_id">246675545449582_1632874756829647</td>
+<td class="gt_row gt_left" headers="status_type">photo</td>
+<td class="gt_row gt_right" headers="status_published">4/5/2018 9:23</td>
+<td class="gt_row gt_right" headers="num_reactions">346</td>
+<td class="gt_row gt_right" headers="num_comments">11</td>
+<td class="gt_row gt_right" headers="num_shares">0</td>
+<td class="gt_row gt_right" headers="num_likes">335</td>
+<td class="gt_row gt_right" headers="num_loves">10</td>
+<td class="gt_row gt_right" headers="num_wows">1</td>
+<td class="gt_row gt_right" headers="num_hahas">0</td>
+<td class="gt_row gt_right" headers="num_sads">0</td>
+<td class="gt_row gt_right" headers="num_angrys">0</td>
+<td class="gt_row gt_center" headers="Column1">NA</td>
+<td class="gt_row gt_center" headers="Column2">NA</td>
+<td class="gt_row gt_center" headers="Column3">NA</td>
+<td class="gt_row gt_center" headers="Column4">NA</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="nature-des-variables-présentes" class="level3">
+<h3 class="anchored" data-anchor-id="nature-des-variables-présentes">Nature des variables présentes</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(Live)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<pre><code>Rows: 7,050
+Columns: 16
+$ status_id        &lt;chr&gt; "246675545449582_1649696485147474", "246675545449582_…
+$ status_type      &lt;chr&gt; "video", "photo", "video", "photo", "photo", "photo",…
+$ status_published &lt;chr&gt; "4/22/2018 6:00", "4/21/2018 22:45", "4/21/2018 6:17"…
+$ num_reactions    &lt;dbl&gt; 529, 150, 227, 111, 213, 217, 503, 295, 203, 170, 210…
+$ num_comments     &lt;dbl&gt; 512, 0, 236, 0, 0, 6, 614, 453, 1, 9, 2, 4, 4, 4, 11,…
+$ num_shares       &lt;dbl&gt; 262, 0, 57, 0, 0, 0, 72, 53, 0, 1, 3, 0, 2, 0, 0, 30,…
+$ num_likes        &lt;dbl&gt; 432, 150, 204, 111, 204, 211, 418, 260, 198, 167, 202…
+$ num_loves        &lt;dbl&gt; 92, 0, 21, 0, 9, 5, 70, 32, 5, 3, 7, 5, 6, 8, 10, 23,…
+$ num_wows         &lt;dbl&gt; 3, 0, 1, 0, 0, 1, 10, 1, 0, 0, 1, 4, 2, 1, 1, 1, 0, 1…
+$ num_hahas        &lt;dbl&gt; 1, 0, 1, 0, 0, 0, 2, 1, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0,…
+$ num_sads         &lt;dbl&gt; 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,…
+$ num_angrys       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+$ Column1          &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ Column2          &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ Column3          &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ Column4          &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</code></pre>
+</div>
+</div>
+<p>La base de données contient les inforamtions suivantes:</p>
+<ul>
+<li><p>status_id : L’ID unique de chaque publication.</p></li>
+<li><p>status_type : Le type de publication (par exemple, photo, statut, lien, vidéo).</p></li>
+<li><p>status_published : La date et l’heure de la publication.</p></li>
+<li><p>num_reactions : Le nombre total de réactions à la publication (par exemple, likes, love, wow, haha, sad, angry).</p></li>
+<li><p>num_comments : Le nombre total de commentaires sur la publication.</p></li>
+<li><p>num_shares : Le nombre total de partages de la publication.</p></li>
+<li><p>num_likes : Le nombre total de “J’aime” pour la publication.</p></li>
+<li><p>num_loves : Le nombre total de “Love” réactions pour la publication.</p></li>
+<li><p>num_wows : Le nombre total de “Wow” réactions pour la publication.</p></li>
+<li><p>num_hahas : Le nombre total de “Haha” réactions pour la publication.</p></li>
+<li><p>num_sads : Le nombre total de “Sad” réactions pour la publication.</p></li>
+<li><p>num_angrys : Le nombre total de “Angry” réactions pour la publication.</p></li>
+</ul>
+</section>
+<section id="selection-des-colonnes-pertinentes" class="level3">
+<h3 class="anchored" data-anchor-id="selection-des-colonnes-pertinentes">Selection des colonnes pertinentes</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7,050 × 11
+   status_id         status_type num_reactions num_comments num_shares num_likes
+   &lt;chr&gt;             &lt;chr&gt;               &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1 246675545449582_… video                 529          512        262       432
+ 2 246675545449582_… photo                 150            0          0       150
+ 3 246675545449582_… video                 227          236         57       204
+ 4 246675545449582_… photo                 111            0          0       111
+ 5 246675545449582_… photo                 213            0          0       204
+ 6 246675545449582_… photo                 217            6          0       211
+ 7 246675545449582_… video                 503          614         72       418
+ 8 246675545449582_… video                 295          453         53       260
+ 9 246675545449582_… photo                 203            1          0       198
+10 246675545449582_… photo                 170            9          1       167
+# ℹ 7,040 more rows
+# ℹ 5 more variables: num_loves &lt;dbl&gt;, num_wows &lt;dbl&gt;, num_hahas &lt;dbl&gt;,
+#   num_sads &lt;dbl&gt;, num_angrys &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="analyse-des-valeurs-manquantes" class="level3">
+<h3 class="anchored" data-anchor-id="analyse-des-valeurs-manquantes">Analyse des valeurs manquantes</h3>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>              nombre proportion
+status_id          0          0
+status_type        0          0
+num_reactions      0          0
+num_comments       0          0
+num_shares         0          0
+num_likes          0          0
+num_loves          0          0
+num_wows           0          0
+num_hahas          0          0
+num_sads           0          0
+num_angrys         0          0</code></pre>
+</div>
+</div>
+<section id="analyse-graphique-des-valeurs-manquantes" class="level4">
+<h4 class="anchored" data-anchor-id="analyse-graphique-des-valeurs-manquantes">Analyse graphique des valeurs manquantes</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_missing</span>(publication)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="analyse-des-distribustions-et-description-des-données" class="level3">
+<h3 class="anchored" data-anchor-id="analyse-des-distribustions-et-description-des-données">Analyse des distribustions et description des données</h3>
+</section>
+<section id="analyse-des-distribustions" class="level3">
+<h3 class="anchored" data-anchor-id="analyse-des-distribustions">1. Analyse des distribustions</h3>
+<section id="analyse-de-la-distribustion-de-la-variable-status_type" class="level4">
+<h4 class="anchored" data-anchor-id="analyse-de-la-distribustion-de-la-variable-status_type">1.1 Analyse de la distribustion de la variable status_type</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>publication <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(status_type) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Total =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Proportion =</span> Total<span class="sc">/</span><span class="fu">sum</span>(Total)<span class="sc">*</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">status_type</th>
+<th style="text-align: right;">Total</th>
+<th style="text-align: right;">Proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">link</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">0.893617</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">photo</td>
+<td style="text-align: right;">4288</td>
+<td style="text-align: right;">60.822695</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">status</td>
+<td style="text-align: right;">365</td>
+<td style="text-align: right;">5.177305</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">video</td>
+<td style="text-align: right;">2334</td>
+<td style="text-align: right;">33.106383</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(type_statut_df, <span class="fu">aes</span>(<span class="at">x =</span> status_type, <span class="at">y =</span> Total, <span class="at">fill =</span> status_type)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(<span class="fu">round</span>(Proportion), <span class="st">"%"</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribustion par Type de Statut"</span>, <span class="at">x =</span> <span class="st">"Type de Statut"</span>, <span class="at">y =</span> <span class="st">"Nombre"</span>) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">"Pastel1"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="analyse-de-la-distribustion-des-variables-continues" class="level4">
+<h4 class="anchored" data-anchor-id="analyse-de-la-distribustion-des-variables-continues">1.2 Analyse de la distribustion des variables continues</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>liste_variable_quanti <span class="ot">&lt;-</span><span class="fu">colnames</span>(publication)[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (var <span class="cf">in</span> liste_variable_quanti) {</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Vérifier si la variable est continue</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.numeric</span>(publication[[var]])) {</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">ggplot</span>(publication, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(<span class="dv">1</span>), <span class="at">y =</span> .data[[var]])) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">paste</span>(<span class="st">"Boxplot de"</span>, var), <span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> var))</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="fu">paste</span>(<span class="st">"La variable"</span>, var, <span class="st">"n'est pas quantitative et sera ignorée pour les boxplots."</span>))</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-13-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-13-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-13-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-13-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-13-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-13-7.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-13-8.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-13-9.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="section" class="level4">
+<h4 class="anchored" data-anchor-id="section"></h4>
+</section>
+</section>
+<section id="description-des-données-1" class="level3">
+<h3 class="anchored" data-anchor-id="description-des-données-1">2. Description des données</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>publication <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">describe</span>() <span class="sc">%&gt;%</span> knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">caption =</span> <span class="st">"Table statistique des données"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Table statistique des données</caption>
+<colgroup>
+<col style="width: 11%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 9%">
+<col style="width: 6%">
+<col style="width: 3%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">vars</th>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">median</th>
+<th style="text-align: right;">trimmed</th>
+<th style="text-align: right;">mad</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">range</th>
+<th style="text-align: right;">skew</th>
+<th style="text-align: right;">kurtosis</th>
+<th style="text-align: right;">se</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">num_reactions</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7050</td>
+<td style="text-align: right;">230.1171631</td>
+<td style="text-align: right;">462.6253091</td>
+<td style="text-align: right;">59.5</td>
+<td style="text-align: right;">112.5464539</td>
+<td style="text-align: right;">77.8365</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4710</td>
+<td style="text-align: right;">4710</td>
+<td style="text-align: right;">3.736861</td>
+<td style="text-align: right;">16.71813</td>
+<td style="text-align: right;">5.5097873</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">num_comments</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">7050</td>
+<td style="text-align: right;">224.3560284</td>
+<td style="text-align: right;">889.6368195</td>
+<td style="text-align: right;">4.0</td>
+<td style="text-align: right;">35.2095745</td>
+<td style="text-align: right;">5.9304</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">20990</td>
+<td style="text-align: right;">20990</td>
+<td style="text-align: right;">9.025009</td>
+<td style="text-align: right;">126.73525</td>
+<td style="text-align: right;">10.5954203</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">num_shares</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">7050</td>
+<td style="text-align: right;">40.0225532</td>
+<td style="text-align: right;">131.5999655</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">7.0553191</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3424</td>
+<td style="text-align: right;">3424</td>
+<td style="text-align: right;">7.096311</td>
+<td style="text-align: right;">96.76510</td>
+<td style="text-align: right;">1.5673328</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">num_likes</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7050</td>
+<td style="text-align: right;">215.0431206</td>
+<td style="text-align: right;">449.4723571</td>
+<td style="text-align: right;">58.0</td>
+<td style="text-align: right;">100.8487589</td>
+<td style="text-align: right;">74.1300</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4710</td>
+<td style="text-align: right;">4710</td>
+<td style="text-align: right;">3.917460</td>
+<td style="text-align: right;">18.40704</td>
+<td style="text-align: right;">5.3531379</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">num_loves</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7050</td>
+<td style="text-align: right;">12.7286525</td>
+<td style="text-align: right;">39.9729301</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">2.9450355</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">657</td>
+<td style="text-align: right;">657</td>
+<td style="text-align: right;">6.002290</td>
+<td style="text-align: right;">50.51974</td>
+<td style="text-align: right;">0.4760707</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">num_wows</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">7050</td>
+<td style="text-align: right;">1.2893617</td>
+<td style="text-align: right;">8.7196504</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.2429078</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">278</td>
+<td style="text-align: right;">278</td>
+<td style="text-align: right;">18.239049</td>
+<td style="text-align: right;">415.17793</td>
+<td style="text-align: right;">0.1038495</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">num_hahas</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7050</td>
+<td style="text-align: right;">0.6964539</td>
+<td style="text-align: right;">3.9571834</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0813830</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right;">20.297101</td>
+<td style="text-align: right;">586.59659</td>
+<td style="text-align: right;">0.0471294</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">num_sads</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">7050</td>
+<td style="text-align: right;">0.2436879</td>
+<td style="text-align: right;">1.5971559</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">17.571388</td>
+<td style="text-align: right;">426.64650</td>
+<td style="text-align: right;">0.0190219</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">num_angrys</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">7050</td>
+<td style="text-align: right;">0.1131915</td>
+<td style="text-align: right;">0.7268119</td>
+<td style="text-align: right;">0.0</td>
+<td style="text-align: right;">0.0000000</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">19.498829</td>
+<td style="text-align: right;">624.13115</td>
+<td style="text-align: right;">0.0086562</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="analyse-de-la-relation-entre-les-variables" class="level2">
+<h2 class="anchored" data-anchor-id="analyse-de-la-relation-entre-les-variables">Analyse de la relation entre les variables</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'#E69f00'</span>, <span class="st">"#009e73"</span>, <span class="st">'#0072b2'</span>, <span class="st">'tomato'</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(colors) <span class="ot">&lt;-</span> <span class="fu">unique</span>(publication<span class="sc">$</span>status_type)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>title_test <span class="ot">&lt;-</span> glue<span class="sc">::</span><span class="fu">glue</span>(</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">'Type de statut pour les publications'</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-1" class="level2">
+<h2 class="anchored" data-anchor-id="section-1"></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>publication <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span> num_reactions, <span class="at">fill =</span> status_type, <span class="at">y =</span> status_type))<span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">width =</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dots</span>(</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">side =</span> <span class="st">'bottom'</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">height =</span> <span class="fl">0.55</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_nudge</span>(<span class="at">y =</span> <span class="sc">-</span><span class="fl">0.075</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_slab</span>(</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="fu">position_nudge</span>(<span class="at">y =</span> <span class="sc">-</span><span class="fl">0.075</span>),</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">height =</span> <span class="fl">0.75</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">+</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colors)<span class="sc">+</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> title_test</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">+</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_size =</span> <span class="dv">20</span>,</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_family =</span> <span class="st">'Source Sans Pro'</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  )<span class="sc">+</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> ggtext<span class="sc">::</span><span class="fu">element_markdown</span>(),</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
