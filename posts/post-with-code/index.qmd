@@ -212,7 +212,7 @@ publication %>%
 colors <- c('#E69f00', "#009e73", '#0072b2', 'tomato')
 names(colors) <- unique(publication$status_type)
 title_test <- glue::glue(
-  'Type de statut pour les publications'
+  'Relation entre les reaction et le type de statut'
 )
 ```
 

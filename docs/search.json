@@ -46,7 +46,7 @@
     "href": "posts/post-with-code/index.html#analyse-de-la-relation-entre-les-variables",
     "title": "Analyse des live",
     "section": "Analyse de la relation entre les variables",
-    "text": "Analyse de la relation entre les variables\n\ncolors &lt;- c('#E69f00', \"#009e73\", '#0072b2', 'tomato')\nnames(colors) &lt;- unique(publication$status_type)\ntitle_test &lt;- glue::glue(\n  'Type de statut pour les publications'\n)"
+    "text": "Analyse de la relation entre les variables\n\ncolors &lt;- c('#E69f00', \"#009e73\", '#0072b2', 'tomato')\nnames(colors) &lt;- unique(publication$status_type)\ntitle_test &lt;- glue::glue(\n  'Relation entre les reaction et le type de statut'\n)"
   },
   {
     "objectID": "posts/post-with-code/index.html#section-1",
